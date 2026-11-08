@@ -130,10 +130,10 @@ def test_orakel_zahlen_der_readme():
     assert sum(r["mehr"] for r in klein) == 0 and sum(r["entschieden"] for r in klein) == 120
     flach = [r for r in zeilen if r["verteilung"] == 3 and r["q"] == 0.4][0]
     assert (flach["mehr"], flach["entschieden"], round(flach["ohne"], 2), round(flach["mit"], 2)) == (36, 40, 1.62, 3.33)
-    assert ev.verdict_orakel(zeilen)[0] == "info" and "+0.04 Behälter, mit 40 % nicht stapelbar +0.60; in der Heuristik sind es +0.23 beziehungsweise +0.75" in ev.verdict_orakel(zeilen)[1]
+    assert ev.verdict_orakel(zeilen)[0] == "info" and "+0.03 Behälter, mit 40 % nicht stapelbar +0.59; in der Heuristik sind es +0.23 beziehungsweise +0.74" in ev.verdict_orakel(zeilen)[1]
     for text in ("alle 480 Instanzen entschieden): Im Optimum brauchen die Bedingungen in **5** von 160 Instanzen mehr Behälter, wenn alle stapelbar sind, in **38** von 160 bei 20 % und in **63** von 160 bei 40 % nicht stapelbar",
                  "Kleine Quader kosten nie etwas (0 von 120), flache am meisten (bei 40 %: 36 von 40, im Mittel 1,62 → 3,33 Behälter)",
-                 "trifft das Optimum mit Bedingungen in **286** von 480 Instanzen. Im Mittel kosten die Bedingungen im Optimum +0,04 (3 Stopps) beziehungsweise +0,60 (mit 40 % nicht stapelbar) Behälter, in der Heuristik +0,23 beziehungsweise +0,75"):
+                 "trifft das Optimum mit Bedingungen in **286** von 480 Instanzen. Im Mittel kosten die Bedingungen im Optimum +0,03 (3 Stopps) beziehungsweise +0,59 (mit 40 % nicht stapelbar) Behälter, in der Heuristik +0,23 beziehungsweise +0,74"):
         assert text in README, text
 
 
@@ -260,5 +260,5 @@ def test_readme_nennt_die_verteilungen_und_das_raster_wie_der_code():
 
 
 def test_readme_hat_keine_offenen_platzhalter_ausser_dem_live_link():
-    assert "{{" not in README and "TESTZAHL" not in README and README.count("TODO") == 1
-    assert "<!-- TODO nach dem Deploy" in README and "https://sebastianhanisch-entladereihenfolge-demo.streamlit.app/" in README
+    assert "{{" not in README and "TESTZAHL" not in README and README.count("TODO") == 0
+    assert "https://sebastianhanisch-entladereihenfolge-demo.streamlit.app/" in README

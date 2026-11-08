@@ -169,7 +169,7 @@ tab = ["| Schlüssel | ohne | " + " | ".join(C.KOMBI_KURZ) + " |", "|---|---|" +
 for k in SCHLUESSEL_LISTE:
     tab.append(f"| {C.SCHLUESSEL_KURZ[k]} | " + " | ".join(f"{z['mittel'][k][c]:.2f}" for c in range(len(C.KOMBIS) + 1)) + " |")
 st.markdown("\n".join(tab))
-st.caption("Mittlere Behälter über der Volumenschranke (Schlüssel in den Zeilen, Bedingung in den Spalten: m Stopps, q Anteil nicht stapelbar), Mittel über die Instanzen der Zelle. Bei 20 bis 80 Quadern fehlt das Optimum, die Schranke ist locker: Lesen Sie die Unterschiede, nicht den Abstand.")
+st.caption("Mittlere Behälter über der Schranke (Schlüssel in den Zeilen, Bedingung in den Spalten: m Stopps, q Anteil nicht stapelbar), Mittel über die Instanzen der Zelle. Bei 20 bis 80 Quadern fehlt das Optimum, die Schranke ist vermutlich locker: Lesen Sie die Unterschiede, nicht den Abstand.")
 kind, text = verdict_kosten(z)
 getattr(st, kind)(text)
 

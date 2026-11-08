@@ -6,7 +6,7 @@ Stück 11 (gelb) der Konzepte-Reihe **„Packen: Reihenfolge und Platzierungsreg
 
 ## Warum dieses Problem
 
-Wer eine Tour fährt, packt die Ware des letzten Stopps zuerst ein und die des ersten zuletzt. Eine Packung, die Behälter spart, kann diese Ordnung verletzen: Liegt ein Quader des ersten Stopps unter einem des letzten, muss beim Entladen umgestaut werden. Die naheliegende Antwort („nach dem Stopp sortieren“) stimmt hier **nicht**: Bei den gemessenen Instanzen ist die Grundfläche als Schlüssel fast immer besser, auch wenn die Bedingung zwingend ist, weil der Packer die Bedingung beim Setzen ohnehin erzwingt. Und die beiden Bedingungen verschärfen sich gegenseitig: An einem Beispiel kostet die Entladereihenfolge allein keinen Behälter, die Stapelbarkeit allein auch nicht, beide zusammen einen.
+Wer eine Tour fährt, packt die Ware des letzten Stopps zuerst ein und die des ersten zuletzt. Eine Packung, die Behälter spart, kann diese Ordnung verletzen: Liegt ein Quader des ersten Stopps unter einem des letzten, muss beim Entladen umgestaut werden. Die naheliegende Antwort („nach dem Stopp sortieren“) stimmt hier **nicht**: Im Zellenmittel ist die Grundfläche als Schlüssel in 55 von 60 Vergleichen mindestens so gut wie Stopp ab (Instanz für Instanz oft gleich), auch wenn die Bedingung zwingend ist, vermutlich weil der Packer die Bedingung beim Setzen ohnehin erzwingt (nicht getestet). Beide Bedingungen zusammen können mehr kosten als jede allein: An einem Beispiel kostet die Entladereihenfolge allein keinen Behälter, die Stapelbarkeit allein auch nicht, beide zusammen einen (im Mittel addieren sich die Kosten etwa).
 
 ## Modell
 
@@ -16,7 +16,7 @@ Quader mit ganzzahliger Breite, Tiefe und Höhe, ohne Drehung, in Behältern der
 
 - **Kern** (`elr_algorithm.py`): `reihenfolge`, `pack` (Extreme Points mit Projektionen, Mindest-Stützfläche, Stopp und Stapelbarkeit; liefert Behälter, Platzierungen und die Eckpunkte je Behälter; ein Anfang der Reihenfolge liefert den Zustand nach so vielen Schritten), `ueber` (die „über“-Relation), `verletzungen`, `entladen_ab`, `stuetzflaeche`, `schranken`, `packung_pruefen` (unabhängiger Prüfer).
 - **Handbeispiele:** zwei feste Mengen von je zwölf Quadern mit Stopps und Stapelbarkeit. Die App zeichnet einen gewählten Behälter in 3D (Farbe nach Stopp, Stapelbarkeit oder Reihenfolge des Setzens; verletzte Quader rot umrandet) und zeigt alle 20 Kombinationen aus Schlüssel und Bedingung. Der Regler „Entladen bis Stopp“ nimmt die Quader bis zu diesem Stopp aus der Zeichnung und zählt, welche unter einem später zu entladenden lagen.
-- **Messraster:** vier Verteilungen × drei Quaderzahlen (20, 40, 80) × **100 feste Instanzen** je Zelle × fünf Schlüssel × sechs Bedingungen (ohne und fünf Kombinationen aus Stopps und Anteil nicht stapelbar), immer mit der Mindest-Stützfläche 80 %. Maßstab ist die Schranke (locker; ein Optimum mit Stützbedingung gibt es nicht). Die Summen stehen als ganze Zahlen in `elr_precomputed.json` (erzeugt von `generate_precomputed.py`).
+- **Messraster:** vier Verteilungen × drei Quaderzahlen (20, 40, 80) × **100 feste Instanzen** je Zelle × fünf Schlüssel × sechs Bedingungen (ohne und fünf Kombinationen aus Stopps und Anteil nicht stapelbar), immer mit der Mindest-Stützfläche 80 %. Maßstab ist die Schranke (vermutlich locker, wie in Stück 9 gemessen; ein Optimum mit Stützbedingung gibt es nicht). Die Summen stehen als ganze Zahlen in `elr_precomputed.json` (erzeugt von `generate_precomputed.py`).
 - **Orakel:** bei 12 Quadern 40 Instanzen je Verteilung und Anteil nicht stapelbar (0, 20, 40 %), 3 Stopps, CP-SAT mit 20 Sekunden Zeitlimit je Lauf, **ohne Stützbedingung** (sie lässt sich nicht linear ausdrücken).
 
 ## Befunde (gemessen, keine Behauptungen)
@@ -32,7 +32,7 @@ Alle Zahlen sind Messungen an den Instanzen dieser Demo (feste Seeds), nachgerec
 | Hilft es, nach dem Stopp zu sortieren? | **Nein, meistens nicht.** Ohne Bedingung sind Grundfläche, Stopp ab und Stopp auf gleich (alle Stopps sind 1, die Packung ist dieselbe). Mit Bedingung ist die Grundfläche allein der beste Schlüssel in **11 / 8 / 9 / 11 / 12** von 12 Zellen (in der Reihenfolge der Bedingungen aus Tabelle A); Stopp ab schlägt sie nur bei 3 Stopps (in 2 Zellen) und bei 5 Stopps (in 3 Zellen), bei den anderen drei Bedingungen nie. Volumen und Lieferung sind in jeder Zelle schlechter, Stopp auf (Gegenprobe) ebenso. Stopp ab kostet im Mittel +0,44 / +0,64 / +0,84 / +1,55 / +2,62 Behälter |
 | Was würde beim Ignorieren klemmen? | Packt man ohne Bedingung (Grundfläche) und misst an 3 Stopps, sind je nach Zelle **28,2 bis 74,1 %** der Quader von einer Blockierung betroffen, im Mittel **3,4 bis 66,3** blockierte Paare je Instanz (2 Stopps: 19,5 bis 63,0 % und 2,3 bis 50,6 Paare; 5 Stopps: 33,5 bis 80,9 % und 4,1 bis 79,4 Paare). Flache Quader leiden am meisten (n = 80, 3 Stopps: 66,3 Paare, 74 %) |
 | Was wäre im besten Fall möglich? | Das **Orakel** (n = 12, 3 Stopps, freie Platzierung, alle 480 Instanzen entschieden): Im Optimum brauchen die Bedingungen in **5** von 160 Instanzen mehr Behälter, wenn alle stapelbar sind, in **38** von 160 bei 20 % und in **63** von 160 bei 40 % nicht stapelbar. Kleine Quader kosten nie etwas (0 von 120), flache am meisten (bei 40 %: 36 von 40, im Mittel 1,62 → 3,33 Behälter) |
-| Wie weit liegt die Heuristik daneben? | Die Heuristik (Grundfläche) trifft das Optimum mit Bedingungen in **286** von 480 Instanzen. Im Mittel kosten die Bedingungen im Optimum +0,04 (3 Stopps) beziehungsweise +0,60 (mit 40 % nicht stapelbar) Behälter, in der Heuristik +0,23 beziehungsweise +0,75 |
+| Wie weit liegt die Heuristik daneben? | Die Heuristik (Grundfläche) trifft das Optimum mit Bedingungen in **286** von 480 Instanzen. Im Mittel kosten die Bedingungen im Optimum +0,03 (3 Stopps) beziehungsweise +0,59 (mit 40 % nicht stapelbar) Behälter, in der Heuristik +0,23 beziehungsweise +0,74 (Differenzen der ungerundeten Mittel) |
 
 **Beispiel 1** (Behälterzahl je Schlüssel und Bedingung; 3 Stopps, 20 % nicht stapelbar):
 
@@ -54,7 +54,7 @@ Alle Zahlen sind Messungen an den Instanzen dieser Demo (feste Seeds), nachgerec
 | Stopp ab | 1 | 2 | 1 | 2 |
 | Stopp auf | 1 | 2 | 1 | 2 |
 
-**Tabelle A: Behälter über der Schranke für die Grundfläche** (Mittel über 100 Instanzen je Zelle; ohne Bedingung und mit den fünf Kombinationen aus Stopps m und Anteil nicht stapelbar q; kein Optimum, die Schranke ist locker, dort zählt nur der Vergleich der Kombinationen):
+**Tabelle A: Behälter über der Schranke für die Grundfläche** (Mittel über 100 Instanzen je Zelle; ohne Bedingung und mit den fünf Kombinationen aus Stopps m und Anteil nicht stapelbar q; kein Optimum, die Schranke ist vermutlich locker, dort zählt nur der Vergleich der Kombinationen):
 
 | Verteilung | n | ohne | m = 2 | m = 3 | m = 5 | m = 3, q = 0,2 | m = 3, q = 0,4 |
 |---|---|---|---|---|---|---|---|

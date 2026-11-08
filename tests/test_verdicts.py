@@ -34,7 +34,7 @@ def test_aktuell_kostet_nichts_und_spart_und_das_optimum_unbekannt():
     assert kind == "info" and "Die Bedingungen kosten hier nichts." in text and "Das ist das Optimum ohne Stützbedingung (die Schranke allein ergäbe 1)." in text
     assert "Für beide Bedingungen ist das einer der besten Schlüssel dieser Instanz." in text
     kind, text = ev.verdict_aktuell(_a(G, 1, 2, None, t, 2))
-    assert kind == "success" and "Die Bedingungen sparen hier 1 (die Reihenfolge der Quader ändert sich)." in text and "Ein Optimum ist für diese Instanz nicht berechnet; die Schranke ist 2." in text
+    assert kind == "success" and "Die Bedingungen sparen hier 1 (die Platzierung der Quader ändert sich)." in text and "Ein Optimum ist für diese Instanz nicht berechnet; die Schranke ist 2." in text
 
 
 def test_aktuell_ohne_beachtung_und_der_bedingungstext():

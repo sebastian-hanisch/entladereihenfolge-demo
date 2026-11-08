@@ -156,7 +156,7 @@ def verdict_aktuell(a: Analysis) -> tuple[str, str]:
     if a.count > a.ohne:
         return "warning", kopf + f" Die Bedingungen kosten hier {a.count - a.ohne}." + opt_teil + passt
     if a.count < a.ohne:
-        return "success", kopf + f" Die Bedingungen sparen hier {a.ohne - a.count} (die Reihenfolge der Quader ändert sich)." + opt_teil + passt
+        return "success", kopf + f" Die Bedingungen sparen hier {a.ohne - a.count} (die Platzierung der Quader ändert sich)." + opt_teil + passt
     return "info", kopf + " Die Bedingungen kosten hier nichts." + opt_teil + passt
 
 
@@ -305,7 +305,7 @@ def verdict_messung(z: dict) -> tuple[str, str]:
     besser = [c for c in range(1, len(C.KOMBIS) + 1) if g[STOPP_AB][c] < g[GRUNDFLAECHE][c]]
     if besser:
         return "success", kopf + f" Der Schlüssel Stopp ab schlägt die Grundfläche bei {', '.join(C.KOMBI_KURZ[c - 1] for c in besser)}."
-    return "info", kopf + " Der Schlüssel Stopp ab schlägt die Grundfläche in keiner Kombination: Der Packer erzwingt die Bedingung ohnehin, das Sortieren nach dem Stopp bringt nichts."
+    return "info", kopf + " Der Schlüssel Stopp ab schlägt die Grundfläche in keiner Kombination: Vermutlich erzwingt der Packer die Bedingung ohnehin (nicht getestet), das Sortieren nach dem Stopp bringt hier nichts."
 
 
 def verdict_verletzung_raster(z: dict) -> tuple[str, str]:
@@ -338,10 +338,10 @@ def verdict_orakel(zeilen: list) -> tuple[str, str]:
 
     nur = [z for z in zeilen if z["q"] == 0.0]
     viel = [z for z in zeilen if z["q"] == max(C.ORAKEL_Q)]
-    opt_nur = round(mittel(nur, "mit"), 2) - round(mittel(nur, "ohne"), 2)
-    opt_viel = round(mittel(viel, "mit"), 2) - round(mittel(viel, "ohne"), 2)
-    heur_nur = round(mittel(nur, "heur_mit"), 2) - round(mittel(nur, "heur_ohne"), 2)
-    heur_viel = round(mittel(viel, "heur_mit"), 2) - round(mittel(viel, "heur_ohne"), 2)
+    opt_nur = round(mittel(nur, "mit") - mittel(nur, "ohne"), 2)
+    opt_viel = round(mittel(viel, "mit") - mittel(viel, "ohne"), 2)
+    heur_nur = round(mittel(nur, "heur_mit") - mittel(nur, "heur_ohne"), 2)
+    heur_viel = round(mittel(viel, "heur_mit") - mittel(viel, "heur_ohne"), 2)
     teil = (f"Im Optimum kostet die Entladereihenfolge allein bei 3 Stopps im Mittel {opt_nur:+.2f} Behälter, mit 40 % nicht stapelbar {opt_viel:+.2f}; in der Heuristik sind es {heur_nur:+.2f} beziehungsweise {heur_viel:+.2f} "
             "(Mittel über die vier Verteilungen, n = 12, ohne Stützbedingung).")
     if heur_viel > opt_viel:
