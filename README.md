@@ -1,7 +1,6 @@
 # Entladereihenfolge und Stapelbarkeit – Streamlit-Demo
 
-<!-- TODO nach dem Deploy: direkt hierher den Live-Link setzen (Leerzeile davor und danach):
-**[→ Demo live ausprobieren](https://sebastianhanisch-entladereihenfolge-demo.streamlit.app/)** -->
+**[→ Demo live ausprobieren](https://sebastianhanisch-entladereihenfolge-demo.streamlit.app/)**
 
 Stück 11 (gelb) der Konzepte-Reihe **„Packen: Reihenfolge und Platzierungsregel“** für die Website „Sebastian Hanisch – Operations Research und Machine Learning“ (ein Verfahren mit wachsendem Beispiel: eine Packung entsteht aus einer Reihenfolge der Teile und einer Regel, wohin das nächste kommt). Stück 9 hat Quader in Behälter gepackt, Stück 10 hat die Stützfläche zur Nebenbedingung gemacht. Diese Demo fügt zwei weitere hinzu, wie sie jede Auslieferung kennt: Jeder Quader hat einen **Stopp** (1 wird zuerst entladen), und manche Quader sind **nicht stapelbar**. Gemessen wird, was das an Behältern kostet und ob es sich lohnt, die Quader nach dem Stopp zu sortieren. Die Fall-Demos zur Stapelplanung zeigen die Anwendung samt Kostenmodell; diese Demo erklärt den Mechanismus davor.
 
