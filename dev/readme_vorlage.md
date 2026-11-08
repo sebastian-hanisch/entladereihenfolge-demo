@@ -61,7 +61,7 @@ Alle Zahlen sind Messungen an den Instanzen dieser Demo (feste Seeds), nachgerec
 ## Ehrliche Grenzen
 
 - Alle Aussagen gelten für Quader ohne Drehung, vier Verteilungen mit festen Bereichen, Quaderzahlen 20, 40 und 80 im Raster (12 beim Orakel), eine Behältergröße, **zufällige Stopps und Stapelbarkeit** (keine Praxisdaten, unabhängig von den Maßen) und **einen** Dekodierer (Extreme Points mit Projektionen, eigene Lesart) mit der Wahl „tiefster, hinterster, linkester Eckpunkt“. Stapellast, Gewichtsgrenzen, Drehung und die seitliche Zufahrt zur Tür kommen nicht vor; geprüft wird nur die Blockierung von oben.
-- Die Raster-Tabellen gelten mit der Mindest-Stützfläche 80 %. Ein **Optimum mit Stützbedingung** fehlt (CP-SAT kann die Stützfläche nicht linear ausdrücken); das Orakel gilt ohne sie, **und es darf Quader frei anordnen**. Es zeigt, wann die Bedingungen die Aufgabe selbst teurer machen, nicht, was mit Stützfläche optimal wäre.
+- Die Raster-Tabellen gelten mit der Mindest-Stützfläche 80 %. Ein **Optimum mit Stützbedingung** fehlt (die Stützfläche ist im CP-SAT-Modell nicht abgebildet); das Orakel gilt ohne sie, **und es darf Quader frei anordnen**. Es zeigt, wann die Bedingungen die Aufgabe selbst teurer machen, nicht, was mit Stützfläche optimal wäre.
 - Die Verletzungen hängen am Schlüssel und an der Mindest-Stützfläche, mit denen ohne Bedingung gepackt wird (Grundfläche, 80 %).
 - Die Projektionen der Eckpunkte sind nach eigener Lesart umgesetzt (Stück 9); es wird keine Zahl und keine Aussage der Literatur übernommen.
 - Was Umstauen kostet, misst die Demo nicht (siehe die Umstauen-Linie); zur **Laufzeit** macht sie keine Aussage.
